@@ -16,26 +16,31 @@ def multiplierScore(streak):
         return streak
 
 def testDetonate(index, asteroid, asteroidCount):
-    score = 0
-    left = index
-    right = index
+    score = 1
+    left = index - 1
+    right = index + 1
     total = 1
-    streak = 1
-    currentType = asteroid[index]
-    leftType = currentType
-    rightType = currentType
-    while left > 0 and right < asteroidCount - 1:
+    streak = 0
+    currentType = asteroid[left]
+    leftType = asteroid[left]
+    rightType = asteroid[right]
+    while left >= 0 and right <= asteroidCount - 1:
         while leftType == currentType and left > 0:
             streak += 1
             total += 1
             left -= 1
-        leftType = asteroid[left]
+            leftType = asteroid[left]
         while rightType == currentType and right < asteroidCount - 1:
             streak += 1
             total += 1
             right += 1
-        rightType = asteroid[right]
+            rightType = asteroid[right]
+        
+        streak += (rightType == currentType) + (leftType == currentType)
         score += multiplierScore(streak)
+        if right == asteroidCount - 1 and left == 0:    
+            break
+
         streak = 0
         if leftType == rightType:
             currentType = leftType
@@ -56,14 +61,13 @@ def solve(asteroids):
                 break
             sameAsBefore = asteroids[index - 1] == char
             sameAsAfter = asteroids[index + 1] == char
-            # logging.info("{}, {}, {}".format(char, asteroids[index - 1], asteroids[index + 1]))
             if asteroids[index - 1] == asteroids[index + 1]:
+                logging.info("{}, {}, {}".format(char, asteroids[index - 1], asteroids[index + 1]))
                 scores.append(testDetonate(index, asteroids, asteroidCount))
-                char = previous
-            elif sameAsBefore:
-                char = previous
+                previous = char
             elif not sameAsAfter:
-                char = previous
+                previous = char
+
     # logging.info("Scores: {}".format(scores))
     return max(scores, default= (0,0, 0),key=lambda x: x[1])
 
@@ -74,6 +78,7 @@ def evaluateAsteroid():
     result = []
     for asteroids in asteroidsList:
         solution = solve(asteroids)
+        logging.info("############")
         result.append({"input": asteroids, "score": solution[1], "origin": solution[0]})
 
     logging.info("My result :{}".format(result))
