@@ -40,6 +40,7 @@ class Solver:
                 if 0 <= x2 < self.col and 0 <= y2 < self.row and self.grid[y2][x2] != 1 and self.grid[y2][x2] != 2 and (x2, y2) not in seen:
                     queue.append(path + [(x2, y2)])
                     seen.add((x2, y2))
+        return -1
 
     def solveP1(self, intInd):
         if self.grid[intInd[0]][intInd[1]] == 0 or self.grid[intInd[0]][intInd[1]] == 2:
