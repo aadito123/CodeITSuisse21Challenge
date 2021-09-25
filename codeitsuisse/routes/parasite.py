@@ -65,7 +65,7 @@ class Solver:
         return -1
 
     def solveP1(self, intInd):
-        if self.grid[intInd[0]][intInd[1]] == 0 :#or self.grid[intInd[0]][intInd[1]] == 2:
+        if self.grid[intInd[0]][intInd[1]] == 0 or self.grid[intInd[0]][intInd[1]] == 2:
             return -1
         else:
             return self.pathFind(intInd)
