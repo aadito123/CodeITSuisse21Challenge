@@ -13,11 +13,9 @@ class Solve:
         self.max = interview['maxRating']        
 
     def solve(self):
-        for question in self.questions:
-            maxiFrom = max(question, key=lambda interval: interval['from'])
-            logging.info("maxiFrom: {}".format(maxiFrom))
-            miniFrom = min(question, key=lambda interval: interval['to'])
-            logging.info("miniFrom: {}".format(miniFrom))
+        maxiFrom = max(self.questions, key=lambda interval: interval[0]['from'])
+        miniTo = min(self.questions, key=lambda interval: interval[0]['to'])
+        logging.info("Max: {}, Min: {}".format(maxiFrom, miniTo))
         return {}
 
 @app.route('/stig/perry', methods=['POST'])
