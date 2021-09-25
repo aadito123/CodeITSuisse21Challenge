@@ -8,12 +8,22 @@ from codeitsuisse import app
 logger = logging.getLogger(__name__)
 
 
+def solveForRoom(room):
+    roomNum = room['room']
+    grid = room['grid']
+    intInd = [(int(tup.split(',')[0]), int(tup.split(',')[1])) for tup in room['interestedIndividuals']]
+    logging.info("Room: {}".format(intInd))
+    return 1
+
+
 @app.route('/parasite', methods=['POST'])
 def evaluateParasite():
-    data = request.get_json()
-    logging.info("data sent for evaluation {}".format(data))
-    inputValue = data.get("input")
-    result = inputValue * inputValue
+    rooms = request.get_json()
+    logging.info("data sent for evaluation {}".format(rooms))
+    result = []
+    for room in rooms:
+        result.append(solveForRoom(room))
+
     logging.info("My result :{}".format(result))
     return json.dumps(result)
 '''
