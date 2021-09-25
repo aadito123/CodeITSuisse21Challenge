@@ -44,16 +44,20 @@ def solve(asteroids):
     scores = []
     asteroidCount = len(asteroids)
     previous = ''
+    flag = True
     for index, char in enumerate(asteroids[1:], 1):
         if index == asteroidCount - 1:
             break
         if char == previous:
             continue
         else:
+            sameAsBefore = asteroids[index - 1] == char
             # logging.info("{}, {}, {}".format(char, asteroids[index - 1], asteroids[index + 1]))
-            if asteroids[index - 1] == char and asteroids[index + 1] == char:
+            if sameAsBefore and asteroids[index + 1] == char:
                 scores.append(testDetonate(index, asteroids, asteroidCount))
-                previous = char
+                char = previous
+            elif sameAsBefore:
+                char = previous
     # logging.info("Scores: {}".format(scores))
     return max(scores, default= (0,0),key=lambda x: x[1])
 
