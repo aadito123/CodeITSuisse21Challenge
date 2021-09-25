@@ -61,12 +61,12 @@ class Solve:
 
             
     def solve(self):
-        symbol = ['S', 'M', 'L']
+        symbol = ['', 'S', 'M', 'L']
         for y in range(self.maxY+1):
             for x in range(self.maxX+1):
-                self.gridMapNum[y][x] = 2 - (self.value(x, y)%3)
+                self.gridMapNum[y][x] = 3 - (self.value(x, y)%3)
                 self.gridMap[y][x] = symbol[self.gridMapNum[y][x]]
-        return {"gridMap": self.gridMap, "minimumCost": self.minPathSum()+2}
+        return {"gridMap": self.gridMap, "minimumCost": self.minPathSum()-3}
 
 @app.route('/stock-hunter', methods=['POST'])
 def evaluateStockHunter():
