@@ -15,4 +15,4 @@ def evaluateFixedRace():
     
     result = request.data
     logging.info("My result :{}".format(result))
-    return json.dumps(result)
+    return result
