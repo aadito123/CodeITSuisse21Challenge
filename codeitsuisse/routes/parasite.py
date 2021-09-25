@@ -1,7 +1,7 @@
 import logging
 import json 
 
-from flask import request, jsonify, Response
+from flask import request, jsonify
 
 from codeitsuisse import app
 
@@ -96,8 +96,7 @@ def evaluateParasite():
         result.append(solveForRoom(room))
 
     logging.info("My result :{}".format(result))
-    return Response(status=200, mimetype='application/json', )
-    #return json.dumps(result)
+    return json.dumps(result)
 '''
 Sample Input
 [
