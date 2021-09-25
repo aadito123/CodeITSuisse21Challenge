@@ -4,9 +4,6 @@ import collections
 import requests
 from functools import lru_cache
 from flask import request, jsonify
-import networkx as nx
-import numpy as np
-#from flask_sse import sse
 
 from codeitsuisse import app
 
