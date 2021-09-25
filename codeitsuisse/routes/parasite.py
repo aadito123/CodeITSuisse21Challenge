@@ -26,14 +26,14 @@ class Solver:
         self.cache = {}
 
     def pathFind(self, intInd):
-        queue = collections.deque([[self.infected]])
-        seen = set([self.infected])
+        queue = collections.deque([[intInd]])
+        seen = set([intInd])
         while queue:
             path = queue.popleft()
             x, y = path[-1]
             if (x, y) in self.cache.keys():
                 return len(path) + self.cache[(x, y)]
-            if (x, y) == intInd:
+            if (x, y) == self.infected:
                 self.cache[intInd] = len(path) - 1
                 return self.cache[intInd]
             for x2, y2 in ((x+1,y), (x-1,y), (x,y+1), (x,y-1)):
