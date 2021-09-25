@@ -102,7 +102,7 @@ class Solver:
 def evaluateParasite():
     #logging.info("endpoint called")
     rooms = request.get_json()
-    #logging.info("data sent for evaluation {}".format(rooms))
+    logging.info("data sent for evaluation {}".format(rooms))
     result = []
     for room in rooms:
         result.append(Solver(room).solve())
