@@ -1,9 +1,11 @@
 import logging
 import json
+import collections
 import requests
 from functools import lru_cache
 from flask import request, jsonify
-from numpy import array
+import networkx as nx
+import numpy as np
 #from flask_sse import sse
 
 from codeitsuisse import app
@@ -21,6 +23,7 @@ class Solve:
         self.horStep = maze['horizontalStepper']
         self.verStep = maze['verticalStepper']
         self.gridMap = [[0]*(self.maxX+1) for i in range(self.maxY+1)]
+        self.gridMapNum = [[0]*(self.maxX+1) for i in range(self.maxY+1)]
 
     def riskLevel(self, integer, step):
         integer = integer*step + self.gridDepth
@@ -37,13 +40,36 @@ class Solve:
         one = self.value(x - 1, y)
         two = self.value(x, y - 1)
         return self.riskLevel(one*two, 1)
-        
+
+    def minPathSum(self):
+        row = self.maxY
+        column = self.maxX
+        i=row-1
+        j=column-1
+        while j>=0:
+            self.gridMapNum[row][j]+=self.gridMapNum[row][j+1]
+            j-=1
+        while i>=0:
+            self.gridMapNum[i][column]+=self.gridMapNum[i+1][column]
+            i-=1
+        j=column-1
+        i = row-1
+        while i>=0:
+            while j>=0:
+                self.gridMapNum[i][j] += min(self.gridMapNum[i][j+1],self.gridMapNum[i+1][j])
+                j-=1
+            j=column-1
+            i-=1
+        return(self.gridMapNum[0][0])
+
+            
     def solve(self):
-        symbol = ['L', 'M', 'S']
+        symbol = ['S', 'M', 'L']
         for y in range(self.maxY+1):
             for x in range(self.maxX+1):
-                self.gridMap[y][x] = symbol[self.value(x, y)%3]
-        return {"gridMap": self.gridMap, "minimumCost": 1}
+                self.gridMapNum[y][x] = 2 - (self.value(x, y)%3)
+                self.gridMap[y][x] = symbol[self.gridMapNum[y][x]]
+        return {"gridMap": self.gridMap, "minimumCost": self.minPathSum()+2}
 
 @app.route('/stock-hunter', methods=['POST'])
 def evaluateStockHunter():
