@@ -23,6 +23,7 @@ class Solver:
                     break
             if self.infected != (-1, -1):
                 break
+        self.cache = {}
 
     def pathFind(self, intInd):
         queue = collections.deque([[self.infected]])
@@ -30,10 +31,13 @@ class Solver:
         while queue:
             path = queue.popleft()
             x, y = path[-1]
+            if (x, y) in self.cache.keys():
+                return len(path) + self.cache[intInd]
             if (x, y) == intInd:
-                return path
+                self.cache[intInd] = len(path) - 1
+                return self.cache[intInd]
             for x2, y2 in ((x+1,y), (x-1,y), (x,y+1), (x,y-1)):
-                if 0 <= x2 < self.col and 0 <= y2 < self.row and grid[y2][x2] != 1 and grid[y2][x2] != 2 and (x2, y2) not in seen:
+                if 0 <= x2 < self.col and 0 <= y2 < self.row and self.grid[y2][x2] != 1 and self.grid[y2][x2] != 2 and (x2, y2) not in seen:
                     queue.append(path + [(x2, y2)])
                     seen.add((x2, y2))
 
