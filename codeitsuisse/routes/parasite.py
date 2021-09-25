@@ -34,7 +34,6 @@ def pathFind(arr, intInd, infected, border):
             b = p[1] + Dir[i][1]
             # not blocked and valid
             if(a >= 0 and b >= 0 and a < row and b < col and grid[a][b] == 1):
-                print((a, b))           
                 q.append((a, b))
                 length += 1
                 move = True
