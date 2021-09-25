@@ -86,10 +86,10 @@ def solveForRoom(room):
     retDict['p3'] = p3(grid, infected, (row, col))
     retDict['p4'] = p4(grid, infected, (row, col))
 
-@app.route('/parasite', methods=['GET'])
+@app.route('/parasite', methods=['POST'])
 def evaluateParasite():
     logging.info("endpoint called")
-    rooms = request.args
+    rooms = request.get_json()
     logging.info("data sent for evaluation {}".format(rooms))
     result = []
     for room in rooms:
