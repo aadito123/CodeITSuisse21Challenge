@@ -43,9 +43,9 @@ class Solver:
             # mark as visited
             grid[p[0]][p[1]] = -1
             # destination is reached.
-            if(self.cache[p[0]][p[1]] != -1):
-                self.cache[intInd[0]][intInd[1]] = length + self.cache[p[0]][p[1]]
-                return length + self.cache[p[0]][p[1]]
+            if self.cache[p[0]][p[1]] + 1:
+                self.cache[intInd[0]][intInd[1]] = length + self.cache[p[0]][p[1]] - 1
+                return self.cache[intInd[0]][intInd[1]]
             if(p == self.infected) :
                 self.cache[intInd[0]][intInd[1]] = length
                 return length
