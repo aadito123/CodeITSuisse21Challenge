@@ -2,7 +2,7 @@ import logging
 import json
 import requests
 from flask import request, jsonify
-from flask_sse import sse
+#from flask_sse import sse
 
 from codeitsuisse import app
 
