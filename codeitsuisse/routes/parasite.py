@@ -11,8 +11,7 @@ class Solver:
     def __init__(self, room):
         self.grid = room['grid']
         self.room = room['room']
-        self.stringInd = room['interestedIndividuals']
-        self.intInd = [(int(tup.split(',')[0]), int(tup.split(',')[1])) for tup in room['interestedIndividuals']]
+        self.intInd = [((int(tup.split(',')[0]), int(tup.split(',')[1])), tup) for tup in room['interestedIndividuals']]
         #logging.info("Room: {}".format(self.intInd))
         self.infected = (-1, -1)
         self.row = len(self.grid)
@@ -71,10 +70,10 @@ class Solver:
             return self.pathFind(intInd)
         pass
 
-    def p1(self, stringInd):
+    def p1(self):
         p1Dict = {}
-        for i, intIn in enumerate(self.intInd):
-            p1Dict[stringInd[i]] = self.solveP1(intIn)
+        for intIn in self.intInd:
+            p1Dict[intIn[1]] = self.solveP1(intIn[0])
         #logging.info("P1: {}".format(p1Dict))
         return p1Dict
 
@@ -90,7 +89,7 @@ class Solver:
     def solve(self):
         retDict = {}
         retDict['room'] = self.room
-        retDict['p1'] = self.p1(self.stringInd)
+        retDict['p1'] = self.p1()
         retDict['p2'] = self.p2()
         retDict['p3'] = self.p3()
         retDict['p4'] = self.p4()
