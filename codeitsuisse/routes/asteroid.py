@@ -62,7 +62,7 @@ def solve(asteroids):
             sameAsBefore = asteroids[index - 1] == char
             sameAsAfter = asteroids[index + 1] == char
             if asteroids[index - 1] == asteroids[index + 1]:
-                logging.info("{}, {}, {}".format(char, asteroids[index - 1], asteroids[index + 1]))
+                #logging.info("{}, {}, {}".format(char, asteroids[index - 1], asteroids[index + 1]))
                 scores.append(testDetonate(index, asteroids, asteroidCount))
                 previous = char
             elif not sameAsAfter:
