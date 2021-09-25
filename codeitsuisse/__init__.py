@@ -1,6 +1,7 @@
-from flask import Flask;
+from flask import Flask
 app = Flask(__name__)
-import codeitsuisse.routes.square
+
 import codeitsuisse.routes.secret_message
-
-
+import codeitsuisse.routes.square
+import codeitsuisse.routes.tictactoe
+import codeitsuisse.routes.asteroid

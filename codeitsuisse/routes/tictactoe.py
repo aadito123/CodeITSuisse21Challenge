@@ -1,6 +1,6 @@
 import logging
 import json
-
+import requests
 from flask import request, jsonify
 
 from codeitsuisse import app
@@ -8,11 +8,13 @@ from codeitsuisse import app
 logger = logging.getLogger(__name__)
 
 
-@app.route('/square1', methods=['POST'])
-def evaluateSquare1():
+@app.route('/tic-tac-toe', methods=['POST'])
+def evaluateTicTacToe():
     data = request.get_json()
     logging.info("data sent for evaluation {}".format(data))
-    inputValue = data.get("input")
-    result = inputValue * inputValue
+    battleId = data.get("battleId")
+    result = 0
+    got = requests.get('https://cis2021-arena.herokuapp.com/tic-tac-toe/' + battleId)
+    logging.info("got: {}".format(got.text))
     logging.info("My result :{}".format(result))
     return json.dumps(result)
