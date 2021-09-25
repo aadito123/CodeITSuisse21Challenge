@@ -88,10 +88,10 @@ class Solver:
     def solve(self):
         retDict = {}
         retDict['room'] = self.room
-        retDict['p1'] = p1(room['interestedIndividuals'])
-        retDict['p2'] = p2()
-        retDict['p3'] = p3()
-        retDict['p4'] = p4()
+        retDict['p1'] = self.p1(room['interestedIndividuals'])
+        retDict['p2'] = self.p2()
+        retDict['p3'] = self.p3()
+        retDict['p4'] = self.p4()
         return retDict
 
     
