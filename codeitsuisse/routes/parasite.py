@@ -1,6 +1,6 @@
 import logging
 import json 
-
+import collections
 from flask import request, jsonify
 
 from codeitsuisse import app
@@ -23,45 +23,19 @@ class Solver:
                     break
             if self.infected != (-1, -1):
                 break
-        self.cache = [[-1]*self.col for i in range(self.row)]
 
     def pathFind(self, intInd):
-        grid = [row[:] for row in self.grid]
-        
-        length = 0
-        # directions
-        Dir = ((0, 1), (0, -1), (1, 0), (-1, 0))
-        # queue
-        q = []
-        # insert the top right corner.
-        q.append(intInd)
-        # until queue is empty
-        while(len(q) > 0) :
-            p = q[0]
-            q.pop(0)
-            # mark as visited
-            grid[p[0]][p[1]] = -1
-            # destination is reached.
-            if self.cache[p[0]][p[1]] + 1:
-                self.cache[intInd[0]][intInd[1]] = length + self.cache[p[0]][p[1]] - 1
-                return self.cache[intInd[0]][intInd[1]]
-            if(p == self.infected) :
-                self.cache[intInd[0]][intInd[1]] = length
-                return length
-            # check all four directions
-            move = False
-            for i in Dir :
-                # using the direction array
-                a = p[0] + i[0]
-                b = p[1] + i[1]
-                # not blocked and valid
-                if(a >= 0 and b >= 0 and a < self.row and b < self.col and (grid[a][b] == 1 or grid[a][b] == 3)):
-                    q.append((a, b))
-                    length += 1
-                    move = True
-            if not move:
-                length -= 1
-        return -1
+        queue = collections.deque([[self.infected]])
+        seen = set([self.infected])
+        while queue:
+            path = queue.popleft()
+            x, y = path[-1]
+            if (x, y) == intInd:
+                return path
+            for x2, y2 in ((x+1,y), (x-1,y), (x,y+1), (x,y-1)):
+                if 0 <= x2 < self.col and 0 <= y2 < self.row and grid[y2][x2] != 1 and grid[y2][x2] != 2 and (x2, y2) not in seen:
+                    queue.append(path + [(x2, y2)])
+                    seen.add((x2, y2))
 
     def solveP1(self, intInd):
         if self.grid[intInd[0]][intInd[1]] == 0 or self.grid[intInd[0]][intInd[1]] == 2:
