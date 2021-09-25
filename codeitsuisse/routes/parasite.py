@@ -12,7 +12,7 @@ class Solver:
         self.grid = room['grid']
         self.room = room['room']
         self.intInd = [(int(tup.split(',')[0]), int(tup.split(',')[1])) for tup in room['interestedIndividuals']]
-        logging.info("Room: {}".format(intInd))
+        logging.info("Room: {}".format(self.intInd))
         self.infected = (-1, -1)
         self.row = len(grid)
         self.col = len(grid[0])
