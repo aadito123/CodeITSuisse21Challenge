@@ -32,7 +32,7 @@ class Solver:
             path = queue.popleft()
             x, y = path[-1]
             if (x, y) in self.cache.keys():
-                return len(path) + self.cache[intInd]
+                return len(path) + self.cache[(x, y)]
             if (x, y) == intInd:
                 self.cache[intInd] = len(path) - 1
                 return self.cache[intInd]
