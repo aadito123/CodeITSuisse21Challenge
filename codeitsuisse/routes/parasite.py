@@ -56,14 +56,14 @@ def p1(grid, intInd, stringInd, infected, border):
     logging.info("P1: {}".format(p1Dict))
     pass
 
-def p2(grid, infected):
-    pass
+def p2(grid, infected, border):
+    return 1
 
-def p3(grid, infected):
-    pass
+def p3(grid, infected, border):
+    return 1
 
-def p4(grid, infected):
-    pass
+def p4(grid, infected, border):
+    return 1
 
 def solveForRoom(room):
     grid = room['grid']
@@ -82,9 +82,9 @@ def solveForRoom(room):
     retDict = {}
     retDict['room'] = room['room']
     retDict['p1'] = p1(grid, intInd, room['interestedIndividuals'], infected, (row, col))
-    # retDict['p2'] = p2(grid, infected, (row, col))
-    # retDict['p3'] = p3(grid, infected, (row, col))
-    # retDict['p4'] = p4(grid, infected, (row, col))
+    retDict['p2'] = p2(grid, infected, (row, col))
+    retDict['p3'] = p3(grid, infected, (row, col))
+    retDict['p4'] = p4(grid, infected, (row, col))
 
 @app.route('/parasite', methods=['POST'])
 def evaluateParasite():
