@@ -8,8 +8,8 @@ from codeitsuisse import app
 logger = logging.getLogger(__name__)
 
 
-@app.route('/square5', methods=['POST'])
-def evaluateSquare5():
+@app.route('/optopt', methods=['POST'])
+def evaluateOptopt():
     data = request.get_json()
     logging.info("data sent for evaluation {}".format(data))
     inputValue = data.get("input")

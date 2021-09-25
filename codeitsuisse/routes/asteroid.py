@@ -29,12 +29,12 @@ def testDetonate(index, asteroid, asteroidCount):
             streak += 1
             total += 1
             left -= 1
-            leftType = asteroid[left]
+        leftType = asteroid[left]
         while rightType == currentType and right < asteroidCount - 1:
             streak += 1
             total += 1
             right += 1
-            rightType = asteroid[right]
+        rightType = asteroid[right]
         score += multiplierScore(streak)
         streak = 0
         if leftType == rightType:
@@ -65,7 +65,7 @@ def solve(asteroids):
             elif not sameAsAfter:
                 char = previous
     # logging.info("Scores: {}".format(scores))
-    return max(scores, default= (0,0),key=lambda x: x[2])
+    return max(scores, default= (0,0, 0),key=lambda x: x[1])
 
 @app.route('/asteroid', methods=['POST'])
 def evaluateAsteroid():
