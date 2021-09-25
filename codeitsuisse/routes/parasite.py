@@ -7,83 +7,93 @@ from codeitsuisse import app
 
 logger = logging.getLogger(__name__)
 
-def pathFind(arr, intInd, infected, border):
-    grid = [row[:] for row in arr]
-    row, col = border
-    length = 0
-    # directions
-    Dir = [ [0, 1], [0, -1], [1, 0], [-1, 0]]
-    # queue
-    q = []
-    # insert the top right corner.
-    q.append(infected)
-    # until queue is empty
-    while(len(q) > 0) :
-        p = q[0]
-        q.pop(0)
-        # mark as visited
-        grid[p[0]][p[1]] = -1
-        # destination is reached.
-        if(p == intInd) :
-            return length
-        # check all four directions
-        move = False
-        for i in range(4) :
-            # using the direction array
-            a = p[0] + Dir[i][0]
-            b = p[1] + Dir[i][1]
-            # not blocked and valid
-            if(a >= 0 and b >= 0 and a < row and b < col and grid[a][b] == 1):
-                q.append((a, b))
-                length += 1
-                move = True
-        if not move:
-            length -= 1
-    return -1
-
-def solveP1(intInd, grid, infected, border):
-    if grid[intInd[0]][intInd[1]] == 0 or grid[intInd[0]][intInd[1]] == 2:
-        return -1
-    else:
-        return pathFind(grid, intInd, infected, border)
-    pass
-
-def p1(grid, intInd, stringInd, infected, border):
-    p1Dict = {}
-    for i, intIn in enumerate(intInd):
-        p1Dict[stringInd[i]] = solveP1(intIn, grid, infected, border)
-    logging.info("P1: {}".format(p1Dict))
-    pass
-
-def p2(grid, infected, border):
-    return 1
-
-def p3(grid, infected, border):
-    return 1
-
-def p4(grid, infected, border):
-    return 1
-
-def solveForRoom(room):
-    grid = room['grid']
-    intInd = [(int(tup.split(',')[0]), int(tup.split(',')[1])) for tup in room['interestedIndividuals']]
-    logging.info("Room: {}".format(intInd))
-    infected = (-1, -1)
-    row = len(grid)
-    col = len(grid[0])
-    for i in range(row):
-        for j in range(col):
-            if grid[i][j] == 3:
-                infected = (i, j)
+class Solver:
+    def __init__(self, room):
+        self.grid = room['grid']
+        self.room = room['room']
+        self.intInd = [(int(tup.split(',')[0]), int(tup.split(',')[1])) for tup in room['interestedIndividuals']]
+        logging.info("Room: {}".format(intInd))
+        self.infected = (-1, -1)
+        self.row = len(grid)
+        self.col = len(grid[0])
+        for i in range(row):
+            for j in range(col):
+                if grid[i][j] == 3:
+                    self.infected = (i, j)
+                    break
+            if self.infected != (-1, -1):
                 break
-        if infected != (-1, -1):
-            break
-    retDict = {}
-    retDict['room'] = room['room']
-    retDict['p1'] = p1(grid, intInd, room['interestedIndividuals'], infected, (row, col))
-    retDict['p2'] = p2(grid, infected, (row, col))
-    retDict['p3'] = p3(grid, infected, (row, col))
-    retDict['p4'] = p4(grid, infected, (row, col))
+        self.cache = [[-1]*self.col for i in range(self.row)]
+
+    def pathFind(self, intInd):
+        grid = [row[:] for row in self.grid]
+        length = 0
+        # directions
+        Dir = [ [0, 1], [0, -1], [1, 0], [-1, 0]]
+        # queue
+        q = []
+        # insert the top right corner.
+        q.append(self.infected)
+        # until queue is empty
+        while(len(q) > 0) :
+            p = q[0]
+            q.pop(0)
+            # mark as visited
+            grid[p[0]][p[1]] = -1
+            # destination is reached.
+            if(self.cache[p[0]][p[1]] != 1):
+                return self.cache[p[0]][p[1]]
+            if(p == intInd) :
+                self.cache[p[0]][p[1]] = length
+                return length
+            # check all four directions
+            move = False
+            for i in range(4) :
+                # using the direction array
+                a = p[0] + Dir[i][0]
+                b = p[1] + Dir[i][1]
+                # not blocked and valid
+                if(a >= 0 and b >= 0 and a < self.row and b < self.col and grid[a][b] == 1):
+                    q.append((a, b))
+                    length += 1
+                    move = True
+            if not move:
+                length -= 1
+        return -1
+
+    def solveP1(self, intInd):
+        if self.grid[intInd[0]][intInd[1]] == 0 or self.grid[intInd[0]][intInd[1]] == 2:
+            return -1
+        else:
+            return self.pathFind(grid, intInd)
+        pass
+
+    def p1(self, intInd, stringInd):
+        p1Dict = {}
+        for i, intIn in enumerate(intInd):
+            p1Dict[stringInd[i]] = self.solveP1(intIn)
+        logging.info("P1: {}".format(p1Dict))
+        pass
+
+    def p2(self, grid, infected, border):
+        return 1
+
+    def p3(self, grid, infected, border):
+        return 1
+
+    def p4(self, grid, infected, border):
+        return 1
+
+    def solve(self):
+        retDict = {}
+        retDict['room'] = self.room
+        retDict['p1'] = p1(grid, intInd, room['interestedIndividuals'], infected, (row, col))
+        retDict['p2'] = p2(grid, infected, (row, col))
+        retDict['p3'] = p3(grid, infected, (row, col))
+        retDict['p4'] = p4(grid, infected, (row, col))
+        return retDict
+
+    
 
 @app.route('/parasite', methods=['POST'])
 def evaluateParasite():
@@ -92,7 +102,7 @@ def evaluateParasite():
     logging.info("data sent for evaluation {}".format(rooms))
     result = []
     for room in rooms:
-        result.append(solveForRoom(room))
+        result.append(Solver(room).solve())
 
     logging.info("My result :{}".format(result))
     return json.dumps(result)
