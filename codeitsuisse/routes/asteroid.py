@@ -16,10 +16,10 @@ def multiplierScore(streak):
         return streak
 
 def testDetonate(index, asteroid, asteroidCount):
+    total = 1
     score = 1
     left = index - 1
     right = index + 1
-    total = 1
     streak = 0
     currentType = asteroid[left]
     leftType = asteroid[left]
@@ -27,16 +27,16 @@ def testDetonate(index, asteroid, asteroidCount):
     while left >= 0 and right <= asteroidCount - 1:
         while leftType == currentType and left > 0:
             streak += 1
-            total += 1
             left -= 1
             leftType = asteroid[left]
         while rightType == currentType and right < asteroidCount - 1:
             streak += 1
-            total += 1
             right += 1
             rightType = asteroid[right]
         
         streak += (rightType == currentType) + (leftType == currentType)
+        total += streak
+        #logging.info("{}: {}".format(currentType, multiplierScore(streak)))
         score += multiplierScore(streak)
         if right == asteroidCount - 1 and left == 0:    
             break
@@ -64,12 +64,13 @@ def solve(asteroids):
             if asteroids[index - 1] == asteroids[index + 1]:
                 #logging.info("{}, {}, {}".format(char, asteroids[index - 1], asteroids[index + 1]))
                 scores.append(testDetonate(index, asteroids, asteroidCount))
+                #logging.info("-------------------")
                 previous = char
             elif not sameAsAfter:
                 previous = char
 
     # logging.info("Scores: {}".format(scores))
-    return max(scores, default= (0,0, 0),key=lambda x: x[1])
+    return max(scores, default= (0,0,0),key=lambda x: x[2])
 
 @app.route('/asteroid', methods=['POST'])
 def evaluateAsteroid():
@@ -78,7 +79,7 @@ def evaluateAsteroid():
     result = []
     for asteroids in asteroidsList:
         solution = solve(asteroids)
-        logging.info("############")
+        #logging.info("############")
         result.append({"input": asteroids, "score": solution[1], "origin": solution[0]})
 
     logging.info("My result :{}".format(result))
