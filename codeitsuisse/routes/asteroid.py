@@ -59,7 +59,7 @@ def evaluateAsteroid():
     result = []
     for asteroids in asteroidsList:
         solution = solve(asteroids)
-        result.append({"input": asteroids, "score": solution[1], "index": solution[0]})
+        result.append({"input": asteroids, "score": solution[1], "origin": solution[0]})
 
     logging.info("My result :{}".format(result))
     return json.dumps(result)
