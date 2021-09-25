@@ -69,29 +69,29 @@ class Solver:
             return self.pathFind(grid, intInd)
         pass
 
-    def p1(self, intInd, stringInd):
+    def p1(self, stringInd):
         p1Dict = {}
-        for i, intIn in enumerate(intInd):
+        for i, intIn in enumerate(self.intInd):
             p1Dict[stringInd[i]] = self.solveP1(intIn)
         logging.info("P1: {}".format(p1Dict))
-        pass
+        return p1Dict
 
-    def p2(self, grid, infected, border):
+    def p2(self):
         return 1
 
-    def p3(self, grid, infected, border):
+    def p3(self):
         return 1
 
-    def p4(self, grid, infected, border):
+    def p4(self):
         return 1
 
     def solve(self):
         retDict = {}
         retDict['room'] = self.room
-        retDict['p1'] = p1(grid, intInd, room['interestedIndividuals'], infected, (row, col))
-        retDict['p2'] = p2(grid, infected, (row, col))
-        retDict['p3'] = p3(grid, infected, (row, col))
-        retDict['p4'] = p4(grid, infected, (row, col))
+        retDict['p1'] = p1(room['interestedIndividuals'])
+        retDict['p2'] = p2()
+        retDict['p3'] = p3()
+        retDict['p4'] = p4()
         return retDict
 
     
