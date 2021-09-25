@@ -42,7 +42,7 @@ class Solve:
         symbol = ['L', 'M', 'S']
         for y in range(self.maxY+1):
             for x in range(self.maxX+1):
-                self.gridMap[y][x] = self.value(x, y)%3
+                self.gridMap[y][x] = symbol[self.value(x, y)%3]
         return {"gridMap": self.gridMap, "minimumCost": 1}
 
 @app.route('/stock-hunter', methods=['POST'])
