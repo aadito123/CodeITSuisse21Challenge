@@ -16,7 +16,11 @@ def evaluateFixedRace():
     result = request.data.decode('ASCII')
     result = result.split(',')
     random.shuffle(result)
-    result = ''.join(result).encode('ASCII')
+    result = ', '.join(result).encode('ASCII')
 
     logging.info("My result :{}".format(result))
     return result
+
+'''
+
+'''
