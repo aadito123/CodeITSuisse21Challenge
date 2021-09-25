@@ -15,10 +15,8 @@ def evaluateFixedRace():
     
     result = request.data.decode('ASCII')
     result = result.split(',')
-    result.remove('Lamont Lasch')
-    result.remove('Annamarie Ahern')
     random.shuffle(result)
-    result = 'Lamont Lasch, Annamarie Ahern, ' + ', '.join(result).encode('ASCII')
+    result = ', '.join(result).encode('ASCII')
 
     logging.info("My result :{}".format(result))
     return result
