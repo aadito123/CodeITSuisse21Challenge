@@ -104,7 +104,7 @@ def evaluateParasite():
     logging.info("data sent for evaluation {}".format(rooms))
     result = []
     for room in rooms:
-        result.append(Solver(room).solve(room['intere']))
+        result.append(Solver(room).solve())
 
     logging.info("My result :{}".format(result))
     return json.dumps(result)
