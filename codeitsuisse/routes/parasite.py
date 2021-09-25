@@ -1,7 +1,7 @@
 import logging
 import json 
 
-from flask import request, jsonify
+from flask import request, jsonify, Response
 
 from codeitsuisse import app
 
@@ -88,6 +88,7 @@ def solveForRoom(room):
 
 @app.route('/parasite', methods=['POST'])
 def evaluateParasite():
+    logging.info("endpoint called")
     rooms = request.get_json()
     logging.info("data sent for evaluation {}".format(rooms))
     result = []
@@ -95,7 +96,8 @@ def evaluateParasite():
         result.append(solveForRoom(room))
 
     logging.info("My result :{}".format(result))
-    return json.dumps(result)
+    return Response(status=200, mimetype='application/json', )
+    #return json.dumps(result)
 '''
 Sample Input
 [
