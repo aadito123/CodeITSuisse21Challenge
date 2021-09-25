@@ -50,7 +50,7 @@ def solve(asteroids):
         if asteroids[index - 1] == char and asteroids[index + 1] == char:
             scores.append(testDetonate(index, asteroids, asteroidCount))
     # logging.info("Scores: {}".format(scores))
-    return max(scores, key=lambda x: x[1])
+    return max(scores, default= (0,0),key=lambda x: x[1])
 
 @app.route('/asteroid', methods=['POST'])
 def evaluateAsteroid():
