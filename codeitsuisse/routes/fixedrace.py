@@ -10,7 +10,11 @@ logger = logging.getLogger(__name__)
 
 @app.route('/fixedrace', methods=['POST'])
 def evaluateFixedRace():
-    data = request.args
+    data = request
+    logging.info("data sent for evaluation {}".format(data))
+    data = request.form
+    logging.info("data sent for evaluation {}".format(data))
+    data = request.values
     logging.info("data sent for evaluation {}".format(data))
     
     result = 0
