@@ -37,13 +37,13 @@ class Solver:
                 self.cache[intInd] = len(path) - 1
                 return self.cache[intInd]
             for x2, y2 in ((x+1,y), (x-1,y), (x,y+1), (x,y-1)):
-                if 0 <= x2 < self.col and 0 <= y2 < self.row and self.grid[y2][x2] != 0 and (x2, y2) not in seen:# and self.grid[y2][x2] != 2
+                if 0 <= x2 < self.col and 0 <= y2 < self.row and self.grid[y2][x2] != 0 and (x2, y2) not in seen and self.grid[y2][x2] != 2:
                     queue.append(path + [(x2, y2)])
                     seen.add((x2, y2))
         return -1
 
     def solveP1(self, intInd):
-        if self.grid[intInd[0]][intInd[1]] == 0:# or self.grid[intInd[0]][intInd[1]] == 2:
+        if self.grid[intInd[0]][intInd[1]] == 0 or self.grid[intInd[0]][intInd[1]] == 2:
             return -1
         else:
             return self.pathFind(intInd)
