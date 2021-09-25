@@ -7,11 +7,15 @@ from codeitsuisse import app
 
 logger = logging.getLogger(__name__)
 
+def intify(s):
+    x = s.split(',')
+    return (int(x[0]), int(x[1]))
+
 class Solver:
     def __init__(self, room):
         self.grid = room['grid']
         self.room = room['room']
-        self.intInd = [(tuple(tup.split(',')), tup) for tup in room['interestedIndividuals']]
+        self.intInd = list(map(intify, room['interestedIndividuals']))
         #logging.info("Room: {}".format(self.intInd))
         self.infected = (-1, -1)
         self.row = len(self.grid)
