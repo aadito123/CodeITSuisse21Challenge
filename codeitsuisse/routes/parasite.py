@@ -14,11 +14,11 @@ class Solver:
         self.intInd = [(int(tup.split(',')[0]), int(tup.split(',')[1])) for tup in room['interestedIndividuals']]
         logging.info("Room: {}".format(self.intInd))
         self.infected = (-1, -1)
-        self.row = len(grid)
-        self.col = len(grid[0])
-        for i in range(row):
-            for j in range(col):
-                if grid[i][j] == 3:
+        self.row = len(self.grid)
+        self.col = len(self.grid[0])
+        for i in range(self.row):
+            for j in range(self.col):
+                if self.grid[i][j] == 3:
                     self.infected = (i, j)
                     break
             if self.infected != (-1, -1):
