@@ -14,9 +14,9 @@ class Solve:
 
     def solve(self):
         for question in self.questions:
-            maxiFrom = max(question, lambda interval: interval['from'])
+            maxiFrom = max(question, key=lambda interval: interval['from'])
             logging.info("maxiFrom: {}".format(maxiFrom))
-            miniFrom = min(question, lambda interval: interval['to'])
+            miniFrom = min(question, key=lambda interval: interval['to'])
             logging.info("miniFrom: {}".format(miniFrom))
         return {}
 
