@@ -55,11 +55,11 @@ def solve(asteroids):
 @app.route('/asteroid', methods=['POST'])
 def evaluateAsteroid():
     asteroidsList = request.get_json()
-    # logging.info("data sent for evaluation {}".format(asteroidsList))
+    logging.info("data sent for evaluation {}".format(asteroidsList))
     result = []
     for asteroids in asteroidsList:
         solution = solve(asteroids)
         result.append({"input": asteroids, "score": solution[1], "index": solution[0]})
 
-    # logging.info("My result :{}".format(result))
+    logging.info("My result :{}".format(result))
     return json.dumps(result)
