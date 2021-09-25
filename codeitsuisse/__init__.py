@@ -4,4 +4,5 @@ app = Flask(__name__)
 import codeitsuisse.routes.secret_message
 import codeitsuisse.routes.square
 import codeitsuisse.routes.tictactoe
+import codeitsuisse.routes.parasite
 import codeitsuisse.routes.asteroid

@@ -38,7 +38,7 @@ def testDetonate(index, asteroid, asteroidCount):
             currentType = leftType
         else:
             break   
-    return (index, int(score))  
+    return (index, score)  
 
 def solve(asteroids):
     scores = []
