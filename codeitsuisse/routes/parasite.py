@@ -11,7 +11,7 @@ class Solver:
     def __init__(self, room):
         self.grid = room['grid']
         self.room = room['room']
-        self.intInd = room['interestedIndividuals']
+        self.stringInd = room['interestedIndividuals']
         self.intInd = [(int(tup.split(',')[0]), int(tup.split(',')[1])) for tup in room['interestedIndividuals']]
         logging.info("Room: {}".format(self.intInd))
         self.infected = (-1, -1)
@@ -89,7 +89,7 @@ class Solver:
     def solve(self):
         retDict = {}
         retDict['room'] = self.room
-        retDict['p1'] = self.p1(self.intInd)
+        retDict['p1'] = self.p1(self.stringInd)
         retDict['p2'] = self.p2()
         retDict['p3'] = self.p3()
         retDict['p4'] = self.p4()
@@ -104,7 +104,7 @@ def evaluateParasite():
     logging.info("data sent for evaluation {}".format(rooms))
     result = []
     for room in rooms:
-        result.append(Solver(room).solve())
+        result.append(Solver(room).solve(room['intere']))
 
     logging.info("My result :{}".format(result))
     return json.dumps(result)
