@@ -89,7 +89,7 @@ def solveForRoom(room):
 @app.route('/parasite', methods=['GET'])
 def evaluateParasite():
     logging.info("endpoint called")
-    rooms = request.get_json()
+    rooms = request.args
     logging.info("data sent for evaluation {}".format(rooms))
     result = []
     for room in rooms:
