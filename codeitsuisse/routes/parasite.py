@@ -75,7 +75,7 @@ class Solver:
         p1Dict = {}
         for i, intIn in enumerate(self.intInd):
             p1Dict[stringInd[i]] = self.solveP1(intIn)
-        logging.info("P1: {}".format(p1Dict))
+        #logging.info("P1: {}".format(p1Dict))
         return p1Dict
 
     def p2(self):
@@ -100,9 +100,9 @@ class Solver:
 
 @app.route('/parasite', methods=['POST'])
 def evaluateParasite():
-    logging.info("endpoint called")
+    #logging.info("endpoint called")
     rooms = request.get_json()
-    logging.info("data sent for evaluation {}".format(rooms))
+    #logging.info("data sent for evaluation {}".format(rooms))
     result = []
     for room in rooms:
         result.append(Solver(room).solve())
