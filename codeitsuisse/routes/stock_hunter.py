@@ -43,8 +43,7 @@ class Solve:
         for y in range(self.maxY+1):
             for x in range(self.maxX+1):
                 self.gridMap[y][x] = self.value(x, y)%3
-        print(self.gridMap)
-
+        return {"gridMap": self.gridMap, "minimumCost": 1}
 
 @app.route('/stock-hunter', methods=['POST'])
 def evaluateStockHunter():
