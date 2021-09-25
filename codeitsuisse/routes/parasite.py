@@ -13,7 +13,7 @@ class Solver:
         self.room = room['room']
         self.stringInd = room['interestedIndividuals']
         self.intInd = [(int(tup.split(',')[0]), int(tup.split(',')[1])) for tup in room['interestedIndividuals']]
-        logging.info("Room: {}".format(self.intInd))
+        #logging.info("Room: {}".format(self.intInd))
         self.infected = (-1, -1)
         self.row = len(self.grid)
         self.col = len(self.grid[0])
@@ -28,9 +28,10 @@ class Solver:
 
     def pathFind(self, intInd):
         grid = [row[:] for row in self.grid]
+        
         length = 0
         # directions
-        Dir = [ [0, 1], [0, -1], [1, 0], [-1, 0]]
+        Dir = ((0, 1), (0, -1), (1, 0), (-1, 0))
         # queue
         q = []
         # insert the top right corner.
@@ -42,7 +43,7 @@ class Solver:
             # mark as visited
             grid[p[0]][p[1]] = -1
             # destination is reached.
-            if(self.cache[p[0]][p[1]] != 1):
+            if(self.cache[p[0]][p[1]] != -1):
                 self.cache[intInd[0]][intInd[1]] = length + self.cache[p[0]][p[1]]
                 return length + self.cache[p[0]][p[1]]
             if(p == self.infected) :
@@ -50,12 +51,12 @@ class Solver:
                 return length
             # check all four directions
             move = False
-            for i in range(4) :
+            for i in Dir :
                 # using the direction array
-                a = p[0] + Dir[i][0]
-                b = p[1] + Dir[i][1]
+                a = p[0] + i[0]
+                b = p[1] + i[1]
                 # not blocked and valid
-                if(a >= 0 and b >= 0 and a < self.row and b < self.col and grid[a][b] == 1):
+                if(a >= 0 and b >= 0 and a < self.row and b < self.col and (grid[a][b] == 1 or grid[a][b] == 3)):
                     q.append((a, b))
                     length += 1
                     move = True
